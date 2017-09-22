@@ -49,7 +49,7 @@ def set_color(light, color):
 #  blink(light, times=3)
 
 if __name__ == '__main__':
-    
+#if True:
     try:
         entry = api.get_sgvs({'count':1})[0]
     except IndexError:
@@ -64,7 +64,7 @@ if __name__ == '__main__':
     
     if mmol > 10.5:
         color = "red"
-    elif mmol > 5.5:
+    elif mmol > 5.3:
         color = "green"
     elif mmol > 4.5:
         color = "yellow"
@@ -73,7 +73,7 @@ if __name__ == '__main__':
         should_blink=True
         
     set_color(light, color)
-    if sohuld_blink:
+    if should_blink:
         blink(light, 3)
 
     
