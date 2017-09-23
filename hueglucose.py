@@ -4,20 +4,20 @@ from phue import Bridge
 import nightscout
 import time
 import sys
-from datetime import datetime
+import datetime
+from dateutil.tz import tzlocal
+import pytz
 
 bridge_ip = "192.168.1.213"
 lightname = "dialys1"
 nightscout_url = "https://bjorningedia4.herokuapp.com"
 
-#pip install phue
+#sudo pip install phue
 #sudo pip install git+https://github.com/ps2/python-nightscout.git
 
 b = Bridge(bridge_ip)
 b.connect()
 all_lights = b.get_light_objects('name')
-light = all_lights[lightname]
-
 api = nightscout.Api(nightscout_url)
 
 COLORS = {
@@ -44,7 +44,13 @@ def set_color(light, color):
     light.brightness = 127
     light.xy=color
 
-  
+def get_nowtime():
+    zone = tzlocal()
+    return datetime.datetime.now().replace(tzinfo=zone)
+def get_entry_date(entry):
+    zone = tzlocal()
+    return entry.date.replace(tzinfo=zone)
+    
 #if glucose is really low, blink!
 #  blink(light, times=3)
 
@@ -53,24 +59,52 @@ if __name__ == '__main__':
     try:
         entry = api.get_sgvs({'count':1})[0]
     except IndexError:
-        print("could not get glucose")
+        print("Could not get glucose")
         sys.exit(-1)
     except:
-        print("could not connect to nightscout api at: %s".format(nightscout_url) )
+        print("Could not connect to nightscout api at: %s".format(nightscout_url) )
         sys.exit(-2)
-        
+    
+    try:
+        light = all_lights[lightname]
+    except KeyError:
+        print("Could not find light '%s', Exiting..".format(lightname))
+        sys.exit(-3)
     mmol = entry.sgv / 18
     should_blink = False
     
-    if mmol > 10.5:
+    #
+    # We consider the system date and the entry glucose date timestamps to be within
+    # the same timezone. This may not always be the case, but for our purposes it
+    # is a reasonable assumption.
+    #
+    
+    now = get_nowtime()
+    minago15 = now - datetime.timedelta(minutes=15)
+    minago30 = now - datetime.timedelta(minutes=30)
+    minago1 = now - datetime.timedelta(minutes=1)
+    entry_date = get_entry_date(entry)
+    
+    #first check gluicose timestamp
+    #only consider glucose value if the timestamp is not too old
+    if entry_date <= minago30:
+        #entry is older than 30 minutes old
         color = "red"
-    elif mmol > 5.3:
-        color = "green"
-    elif mmol > 4.5:
-        color = "yellow"
+    elif entry_date <= minago15:
+        #entry is older than 15 minutes old
+        color = "purple"
     else:
-        color = "red"
-        should_blink=True
+        #entry date is up to 15 minutes old, we consider that valid
+        
+        if mmol > 10.5:
+            color = "red"
+        elif mmol > 5.3:
+            color = "lavender"
+        elif mmol > 4.5:
+            color = "purple"
+        else:
+            color = "red"
+            should_blink=True
         
     set_color(light, color)
     if should_blink:
