@@ -39,13 +39,13 @@ def blink(light, times=1,sleep=3):
 
 def set_color(light, color):
     
-    print("Trying to set color to %s".format(color))
+    print("Trying to set color to {0}".format(color))
     color=COLORS.get(color, None)
     
     light.on=True
     light.brightness = 127
     light.xy=color
-    print("Color was set to %s".format(color))
+    print("Color was set to {1}".format(color))
 
 def get_nowtime():
     zone = tzlocal()
@@ -65,13 +65,13 @@ if __name__ == '__main__':
         print("Could not get glucose")
         sys.exit(-1)
     except:
-        print("Could not connect to nightscout api at: %s".format(nightscout_url) )
+        print("Could not connect to nightscout api at: {0}".format(nightscout_url) )
         sys.exit(-2)
     
     try:
         light = all_lights[lightname]
     except KeyError:
-        print("Could not find light '%s', Exiting..".format(lightname))
+        print("Could not find light '{0}', Exiting..".format(lightname))
         sys.exit(-3)
     mmol = entry.sgv / 18
     should_blink = False
