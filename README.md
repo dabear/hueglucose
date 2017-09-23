@@ -11,7 +11,7 @@ On ubuntu, this can be installed with the following commands
 ```bash
 sudo pip install phue
 sudo pip install git+https://github.com/ps2/python-nightscout.git
-`
+```
 
 ## Installation
 ```bash
