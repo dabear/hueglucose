@@ -31,7 +31,7 @@ COLORS = {
 
 def blink(light, times=1,sleep=3):
     for i in range(0, times):
-        print("alerting")
+        print("Blinking light %s times".format(times))
         light.alert="select"
         if times > 1:
             time.sleep(sleep)
@@ -39,7 +39,7 @@ def blink(light, times=1,sleep=3):
 
 def set_color(light, color):
     color=COLORS.get(color, None)
-    
+    print("Setting color to %s",  color if color else "None (could not find color)")
     light.on=True
     light.brightness = 127
     light.xy=color
