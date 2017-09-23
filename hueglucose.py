@@ -31,7 +31,7 @@ COLORS = {
 
 def blink(light, times=1,sleep=3):
     for i in range(0, times):
-        print("Blinking light %s times".format(times))
+        print("Blinking light {0} times".format(times))
         light.alert="select"
         if times > 1:
             time.sleep(sleep)
@@ -88,24 +88,30 @@ if __name__ == '__main__':
     minago1 = now - datetime.timedelta(minutes=1)
     entry_date = get_entry_date(entry)
     
+    print("Datetime is now {0}. Glucose datetime is {1}. Glucose  is {2} mgdl/ {3} mmol".format(now, entry_date, entry.sgv, mmol))
+    
     #first check gluicose timestamp
     #only consider glucose value if the timestamp is not too old
     if entry_date <= minago30:
-        #entry is older than 30 minutes old
+        print("Glucose entry is older than 30 minutes old")
         color = "red"
     elif entry_date <= minago15:
-        #entry is older than 15 minutes old
+        print("Glucose entry is older than 15 minutes old")
         color = "purple"
     else:
         #entry date is up to 15 minutes old, we consider that valid
         
         if mmol > 10.5:
+            print("Glucose is between 15.3 and 10.5")
             color = "red"
         elif mmol > 5.3:
+            print("Glucose is between 5.3 and 10.5")
             color = "lavender"
         elif mmol > 4.5:
+            print("Glucose is between 4.5 and 5.3")
             color = "purple"
         else:
+            print("Glucose is below 4.5")
             color = "red"
             should_blink=True
         
