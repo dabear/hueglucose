@@ -45,7 +45,7 @@ def set_color(light, color):
     light.on=True
     light.brightness = 127
     light.xy=color
-    print("Color was set to {1}".format(color))
+    print("Color was set to {0}".format(color))
 
 def get_nowtime():
     zone = tzlocal()
