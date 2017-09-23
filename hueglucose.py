@@ -7,6 +7,7 @@ import sys
 import datetime
 from dateutil.tz import tzlocal
 import pytz
+from socket import gethostname
 
 bridge_ip = "192.168.1.213"
 lightname = "dialys1"
@@ -53,7 +54,11 @@ def get_nowtime():
 def get_entry_date(entry):
     zone = tzlocal()
     return entry.date.replace(tzinfo=zone)
-    
+
+if nightscout_url.contains("bjorningedia4.herokuapp.com") and not gethostname().contains("bjorninge"):
+    print("Error: You should probably change the nightscout_url!")
+    sys.exit(0)
+ 
 #if glucose is really low, blink!
 #  blink(light, times=3)
 
