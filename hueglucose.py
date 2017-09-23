@@ -55,7 +55,7 @@ def get_entry_date(entry):
     zone = tzlocal()
     return entry.date.replace(tzinfo=zone)
 
-if nightscout_url.contains("bjorningedia4.herokuapp.com") and not gethostname().contains("bjorninge"):
+if "bjorningedia4.herokuapp.com" in nightscout_url and not "bjorninge" in gethostname():
     print("Error: You should probably change the nightscout_url!")
     sys.exit(0)
  
