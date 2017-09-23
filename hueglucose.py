@@ -39,7 +39,7 @@ def blink(light, times=1,sleep=3):
 
 def set_color(light, color):
     color=COLORS.get(color, None)
-    print("Setting color to %s",  color if color else "None (could not find color)")
+    print("Setting color to %s".format( color if color else "None (could not find color)"))
     light.on=True
     light.brightness = 127
     light.xy=color
