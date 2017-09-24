@@ -48,6 +48,9 @@ def set_color(light, color):
     light.xy=color
     print("Color was set to {0}".format(color))
 
+    if not light.reachable:
+        print("However, the light was not reachable :(")
+
 def get_nowtime():
     zone = tzlocal()
     return datetime.datetime.now().replace(tzinfo=zone)
