@@ -67,6 +67,8 @@ if "bjorningedia4.herokuapp.com" in nightscout_url and not "bjorninge" in gethos
 
 if __name__ == '__main__':
 #if True:
+    now = get_nowtime()
+    print("Datetime is now {0}".format(now))
     try:
         entry = api.get_sgvs({'count':1})[0]
     except IndexError:
@@ -90,13 +92,13 @@ if __name__ == '__main__':
     # is a reasonable assumption.
     #
     
-    now = get_nowtime()
+    
     minago15 = now - datetime.timedelta(minutes=15)
     minago30 = now - datetime.timedelta(minutes=30)
     minago1 = now - datetime.timedelta(minutes=1)
     entry_date = get_entry_date(entry)
     
-    print("Datetime is now {0}. Glucose datetime is {1}. Glucose  is {2} mgdl/ {3} mmol".format(now, entry_date, entry.sgv, mmol))
+    print("Glucose datetime is {1}. Glucose  is {2} mgdl/ {3} mmol".format(entry_date, entry.sgv, mmol))
     
     #first check gluicose timestamp
     #only consider glucose value if the timestamp is not too old
