@@ -44,7 +44,7 @@ def set_color(light, color):
     color=COLORS.get(color, None)
     
     light.on=True
-    light.brightness = 127
+    light.brightness = 110
     light.xy=color
     print("Color was set to {0}".format(color))
 
