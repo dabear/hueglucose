@@ -83,6 +83,9 @@ if __name__ == '__main__':
     except KeyError:
         print("Could not find light '{0}', Exiting..".format(lightname))
         sys.exit(-3)
+    except:
+        print("Could not find hue lights, Exiting...")
+        sys.exit(-3)
     mmol = entry.sgv / 18
     should_blink = False
     
