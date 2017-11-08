@@ -101,7 +101,7 @@ if __name__ == '__main__':
     minago1 = now - datetime.timedelta(minutes=1)
     entry_date = get_entry_date(entry)
     
-    print("Glucose datetime is {1}. Glucose  is {2} mgdl/ {3} mmol".format(entry_date, entry.sgv, mmol))
+    print("Glucose datetime is {0}. Glucose  is {1} mgdl/ {2} mmol".format(entry_date, entry.sgv, mmol))
     
     #first check gluicose timestamp
     #only consider glucose value if the timestamp is not too old
