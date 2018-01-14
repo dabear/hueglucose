@@ -1,4 +1,5 @@
 # hueglucose
+[![red_light.png](https://s9.postimg.org/46up7cxz3/red_light.png)](https://postimg.org/image/pgibi7e9n/) [![green_light.png](https://s9.postimg.org/6znwrvbbj/green_light.png)](https://postimg.org/image/4ic5klrez/)
 
 Sets up a philips hue to display different lighting based on nightscout glucose values
 
