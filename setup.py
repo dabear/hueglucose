@@ -12,6 +12,7 @@ setup(name='hueglucose',
     install_requires=[
         'python-nightscout',
         'phue',
+        'pytz'
     ],
     dependency_links=[
         'https://github.com/ps2/python-nightscout/tarball/master#egg=python-nightscout-1.0.0',

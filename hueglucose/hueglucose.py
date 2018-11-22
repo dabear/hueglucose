@@ -7,19 +7,14 @@ import sys
 import datetime
 from dateutil.tz import tzlocal
 import pytz
-from socket import gethostname
 
-bridge_ip = "192.168.1.213"
-lightname = "dialys1"
-nightscout_url = "https://bjorningedia4.herokuapp.com"
+
+
 
 #sudo pip install phue
 #sudo pip install git+https://github.com/ps2/python-nightscout.git
 
-b = Bridge(bridge_ip)
-b.connect()
-all_lights = b.get_light_objects('name')
-api = nightscout.Api(nightscout_url)
+
 
 COLORS = {
     "green": [0.1724, 0.7468],
@@ -58,15 +53,23 @@ def get_entry_date(entry):
     zone = tzlocal()
     return entry.date.replace(tzinfo=zone)
 
-if "bjorningedia4.herokuapp.com" in nightscout_url and not "bjorninge" in gethostname():
-    print("Error: You should probably change the nightscout_url!")
-    sys.exit(0)
- 
-#if glucose is really low, blink!
-#  blink(light, times=3)
 
-if __name__ == '__main__':
-#if True:
+def runit(bridge_ip, lightname, nightscout_url):
+    try:
+        b = Bridge(bridge_ip)
+        b.connect()
+        all_lights = b.get_light_objects('name')
+    except Exception as e:
+        print("Could not connect to light: {}".format(e.message))
+        sys.exit()
+
+    try:
+        api = nightscout.Api(nightscout_url)
+    except Exception as e:
+        print("Could not connect to nightscout host {}: {}".format(nightscout_url, e.message))
+ 
+
+
     now = get_nowtime()
     print("Datetime is now {0}".format(now))
     try:
@@ -132,6 +135,13 @@ if __name__ == '__main__':
     if should_blink:
         blink(light, 3)
 
+
     
+if __name__ == "__main__":
+    bridge_ip = sys.argv[1] #"192.168.1.211"
+    lightname = sys.argv[2] #"dialys1"
+    nightscout_url = sys.argv[3] #"https://yourNSinstall.herokuapp.com"
+    runit(bridge_ip, lightname, nightscout_url)
+
 
 
