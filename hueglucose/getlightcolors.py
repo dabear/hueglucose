@@ -22,6 +22,5 @@ def runit(bridge_ip, lightname):
 
 if __name__ == "__main__":
     bridge_ip = sys.argv[1] #"192.168.1.211"
-    lightname = sys.argv[2] #"dialys1"
     
-    runit(bridge_ip, lightname)
+    runit(bridge_ip)
