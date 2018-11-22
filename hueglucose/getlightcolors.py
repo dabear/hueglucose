@@ -3,7 +3,7 @@ from phue import Bridge
 import sys
 
 
-def runit(bridge_ip, lightname):
+def runit(bridge_ip):
     try:
         b = Bridge(bridge_ip)
         b.connect()
